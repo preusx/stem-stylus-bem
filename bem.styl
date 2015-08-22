@@ -108,12 +108,13 @@ bem_compose($block_name, $element_name='', $modifer_name='', p=$bem.p.base, m=$m
  * Bem block.
  */
 bem_b($block_name, $prefix=$bem.p.base)
+    $name = bem_compose($block_name, $p:$prefix)
+
     if block is defined
-        name = bem_compose($block_name, $p:$prefix)
-        /.{name}
+        /.{$name}
             {block}
     else
-        return name
+        return $name
 
 
 /**
