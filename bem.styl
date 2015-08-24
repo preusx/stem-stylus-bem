@@ -6,7 +6,8 @@
  * Variables
  * ======================================================================== */
 
-$bem = extend({
+
+storage('bem_settings', {
         p: {
             base:    '',
             layout:  'l',
@@ -20,25 +21,25 @@ $bem = extend({
             e:  '__',            // Bem element separator
             m:  '--',            // Bem mod separator
             mp: '_',             // Bem mod parameter separator
-        },
+        }
+    }, true)                     // Bem mod parameter separator
 
-        use_shortcuts: false,
-    }, $bem)
-
-// $bem_prefix        ?= ''
-// $bem_prefix_state  ?= 'is'
-
-// $bem_ps  ?= '-'                       // Bem prefix separator
-// $bem_es  ?= '__'                      // Bem element separator
-// $bem_ms  ?= '--'                      // Bem mod separator
-// $bem_mps ?= '_'                       // Bem mod parameter separator
-
-// $bem_use_shortcuts ?= false
-
+$bem = storage('bem_settings')
+$bem_use_shortcuts ?= false
 
 /**
  * Mixins
  * ======================================================================== */
+
+
+bem_settings($data=false, $default=false, fallback=false)
+    storage('bem_settings', $data, $default, fallback)
+    $temp = storage('bem_settings')
+
+    reassign('$bem', $temp)
+
+    return $temp
+
 
 bem_get_reg_exp()
     /**
@@ -107,7 +108,7 @@ bem_compose($block_name, $element_name='', $modifer_name='', p=$bem.p.base, m=$m
 /**
  * Bem block.
  */
-bem_b($block_name, $prefix=$bem.p.base)
+bem_b($block_name, $prefix=bem_settings().p.base)
     $name = bem_compose($block_name, $p:$prefix)
 
     if block is defined
@@ -164,7 +165,7 @@ bem_s()
 /**
  * Bem shortcuts for the namespace mixins.
  */
-if $bem.use_shortcuts
+if $bem_use_shortcuts
     b = bem_b
     e = bem_e
     m = bem_m

@@ -49,7 +49,7 @@
 +bem_b('block')
     color #000
 
-    $bem_p()
+    +bem_p()
         &placeholder
             color #fff
 
@@ -77,3 +77,15 @@
 .block__element{background-color:#fff}
 .block__element--mod{color:#0f0}
 
+
+
+// @it Settings change
+
+bem_settings({s: {e: ' > .'}})
+
+.{bem_compose('block', 'element', 'modifer', 'b')}
+    color #000
+
+// @expects
+
+.b-block > .element--modifer{color:#000}
