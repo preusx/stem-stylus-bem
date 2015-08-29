@@ -9,10 +9,10 @@
     "index.styl"
   ],
   "dependencies": {
-    "stem-stylus-utils": "preusx/stem-stylus-utils#0.4.6"
+    "stem-stylus-utils": "preusx/stem-stylus-utils#0.4.7"
   },
   "devDependencies": {
-    "stem-stylus-utils": "preusx/stem-stylus-utils#0.4.6"
+    "stem-stylus-utils": "preusx/stem-stylus-utils#0.4.7"
   },
   "ignore": [
     "**/.*",
