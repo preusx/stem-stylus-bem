@@ -6,7 +6,7 @@
  * Variables
  * ======================================================================== */
 
-storage('bem-settings', {
+stack_storage('bem-settings', {
         p: {
             base:    '',
             layout:  'l',
@@ -23,7 +23,7 @@ storage('bem-settings', {
         }
     }, true)                     // Bem mod parameter separator
 
-$bem = storage('bem-settings')
+$bem = stack_storage('bem-settings')
 $bem_use_shortcuts ?= false
 
 
@@ -32,8 +32,8 @@ $bem_use_shortcuts ?= false
  * ======================================================================== */
 
 bem-settings($data=false, $default=false, fallback=false)
-    storage('bem-settings', $data, $default, fallback)
-    $temp = storage('bem-settings')
+    stack_storage('bem-settings', $data, $default, fallback)
+    $temp = stack_storage('bem-settings')
 
     reassign('$bem', $temp)
 
