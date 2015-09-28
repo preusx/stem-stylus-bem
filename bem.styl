@@ -31,13 +31,13 @@ $bem_use_shortcuts ?= false
  * Mixins
  * ======================================================================== */
 
-bem-settings($data=false, $default=false, fallback=false)
-    stack_storage('__stem__bem-settings', $data, $default, fallback)
-    $temp = stack_storage('__stem__bem-settings')
+bem-settings(data=false, default=false, fallback=false)
+    stack_storage('__stem__bem-settings', data, default, fallback)
+    temp = stack_storage('__stem__bem-settings')
 
-    reassign('$bem', $temp)
+    reassign('$bem', temp)
 
-    return $temp
+    return temp
 
 
 bem_get_reg_exp()
@@ -57,41 +57,41 @@ bem_get_reg_exp()
 
 
 bem_get_selector_parts()
-    $parsed = split(reg_replace(selector(), bem_get_reg_exp(),
+    parsed = split(reg_replace(selector(), bem_get_reg_exp(),
         '$3,$5,$8,$11'), ',');
 
     return {
-        prefix: $parsed[0]
-        block: $parsed[1]
-        element: $parsed[2]
-        mod: $parsed[3]
+        prefix: parsed[0]
+        block: parsed[1]
+        element: parsed[2]
+        mod: parsed[3]
     }
 
 
 bem_get_block_selector()
-    $prefix = reg_replace(selector(), bem_get_reg_exp(), '$3')
-    $prefix = $prefix ? $prefix : $bem.p.base
+    prefix = reg_replace(selector(), bem_get_reg_exp(), '$3')
+    prefix = prefix ? prefix : $bem.p.base
 
-    if !$prefix
+    if !prefix
         return reg_replace(selector(), bem_get_reg_exp(), '$5')
     else
-        return $prefix + $bem.s.p +\
+        return prefix + $bem.s.p +\
             reg_replace(selector(), bem_get_reg_exp(), '$5')
 
 
 bem_get_element_selector()
-    $element_name = reg_replace(selector(), bem_get_reg_exp(), '$8')
+    element_name = reg_replace(selector(), bem_get_reg_exp(), '$8')
 
-    if !$element_name
+    if !element_name
         return bem_get_block_selector()
     else
-        return bem_get_block_selector() + $bem.s.e + $element_name
+        return bem_get_block_selector() + $bem.s.e + element_name
 
 
-bem_compose($block_name, $element_name='', $modifer_name='', p=$bem.p.base, m=$modifer_name)
+bem_compose(block_name, element='', modifer='', p=$bem.p.base, m=modifer)
     return (p ? p + $bem.s.p : '') +\
-        $block_name +\
-        ($element_name ? $bem.s.e + $element_name : '') +\
+        block_name +\
+        (element ? $bem.s.e + element : '') +\
         (m ? $bem.s.m + m : '')
 
 
@@ -107,14 +107,14 @@ bem_compose($block_name, $element_name='', $modifer_name='', p=$bem.p.base, m=$m
 /**
  * Bem block.
  */
-bem_b($block_name, $prefix=bem-settings().p.base)
-    $name = bem_compose($block_name, $p:$prefix)
+bem_b(block_name, prefix=bem-settings().p.base)
+    name = bem_compose(block_name, p:prefix)
 
     if block is defined
-        /.{$name}
+        /.{name}
             {block}
     else
-        return $name
+        return name
 
 
 /**
