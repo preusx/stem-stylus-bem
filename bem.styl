@@ -21,7 +21,7 @@ stack_storage('__stem__bem-settings', {
             m:  '--',            // Bem mod separator
             mp: '_',             // Bem mod parameter separator
         }
-    }, true)                     // Bem mod parameter separator
+    }, default:true)
 
 $bem = stack_storage('__stem__bem-settings')
 $bem_use_shortcuts ?= false
@@ -31,8 +31,8 @@ $bem_use_shortcuts ?= false
  * Mixins
  * ======================================================================== */
 
-bem-settings(data=false, default=false, fallback=false)
-    stack_storage('__stem__bem-settings', data, default, fallback)
+bem-settings(data=false, base=false, fallback=false, default=false)
+    stack_storage('__stem__bem-settings', data, base, fallback, default)
     temp = stack_storage('__stem__bem-settings')
 
     reassign('$bem', temp)
