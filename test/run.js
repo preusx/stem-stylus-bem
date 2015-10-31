@@ -4,7 +4,11 @@ var testRunnerConfig = {
     use: function plugin(stylus) {
       stylus.include(__dirname + '../');
     },
-    import: ['../bower_components/stem-stylus-utils', '../bem']
+    import: [
+      '../bower_components/stem-stylus-extensions',
+      '../bower_components/stem-stylus-utils',
+      '../bem'
+      ]
   }
 }
 

@@ -13,17 +13,17 @@
 // @it Getting current block and element names
 
 .{bem_compose('block', 'element', 'modifer', 'b')}
-    block bem_get_block_selector()
+    block-name bem_get_block_selector()
     element bem_get_element_selector()
 
 .{bem_compose('block', 'element', 'modifer_sortof', 'b')}
-    block bem_get_block_selector()
+    block-name bem_get_block_selector()
     element bem_get_element_selector()
 
 // @expects
 
-.b-block__element--modifer{block:'b-block';element:'b-block__element'}
-.b-block__element--modifer_sortof{block:'b-block';element:'b-block__element'}
+.b-block__element--modifer{block-name:'b-block';element:'b-block__element'}
+.b-block__element--modifer_sortof{block-name:'b-block';element:'b-block__element'}
 
 
 // @it Getting current selector parts
@@ -31,17 +31,19 @@
 .{bem_compose('block', 'element', 'modifer', 'b')}
     $block =  bem_get_selector_parts()
 
-    {$block}
+    for key, val in $block
+        bem-{key} val
 
 .{bem_compose('block', null, 'modifer_sortof', 'b')}
     $block =  bem_get_selector_parts()
 
-    {$block}
+    for key, val in $block
+        bem-{key} val
 
 // @expects
 
-.b-block__element--modifer{prefix:'b';block:'block';element:'element';mod:'modifer'}
-.b-block--modifer_sortof{prefix:'b';block:'block';element:'';mod:'modifer_sortof'}
+.b-block__element--modifer{bem-prefix:'b';bem-block:'block';bem-element:'element';bem-mod:'modifer'}
+.b-block--modifer_sortof{bem-prefix:'b';bem-block:'block';bem-element:'';bem-mod:'modifer_sortof'}
 
 
 // @it Simple block mixins use

@@ -7,6 +7,8 @@
  * ======================================================================== */
 
 stack_storage('__stem__bem-settings', {
+        use-shortcuts: false
+
         p: {
             base:    '',
             layout:  'l',
@@ -23,8 +25,7 @@ stack_storage('__stem__bem-settings', {
         }
     }, default:true)
 
-$bem = stack_storage('__stem__bem-settings')
-$bem_use_shortcuts ?= false
+Bem = stack_storage('__stem__bem-settings')
 
 
 /**
@@ -35,7 +36,7 @@ bem-settings(data=false, base=false, fallback=false, default=false)
     stack_storage('__stem__bem-settings', data, base, fallback, default)
     temp = stack_storage('__stem__bem-settings')
 
-    reassign('$bem', temp)
+    reassign('Bem', temp)
 
     return temp
 
@@ -50,10 +51,10 @@ bem_get_reg_exp()
      * $11  - Modificator name
      */
     return '(\.)' +\
-        '(([a-z0-9]{1,3})(' + $bem.s.p + ')|)' +\
+        '(([a-z0-9]{1,3})(' + Bem.s.p + ')|)' +\
         '([a-z0-9]+)' +\
-        '((' + $bem.s.e + ')([a-z0-9]+)|)' +\
-        '((' + $bem.s.m + ')([a-z0-9_]+)|)'
+        '((' + Bem.s.e + ')([a-z0-9]+)|)' +\
+        '((' + Bem.s.m + ')([a-z0-9_]+)|)'
 
 
 bem_get_selector_parts()
@@ -70,12 +71,12 @@ bem_get_selector_parts()
 
 bem_get_block_selector()
     prefix = reg_replace(selector(), bem_get_reg_exp(), '$3')
-    prefix = prefix ? prefix : $bem.p.base
+    prefix = prefix ? prefix : Bem.p.base
 
     if !prefix
         return reg_replace(selector(), bem_get_reg_exp(), '$5')
     else
-        return prefix + $bem.s.p +\
+        return prefix + Bem.s.p +\
             reg_replace(selector(), bem_get_reg_exp(), '$5')
 
 
@@ -85,14 +86,14 @@ bem_get_element_selector()
     if !element_name
         return bem_get_block_selector()
     else
-        return bem_get_block_selector() + $bem.s.e + element_name
+        return bem_get_block_selector() + Bem.s.e + element_name
 
 
-bem_compose(block_name, element='', modifer='', p=$bem.p.base, m=modifer)
-    return (p ? p + $bem.s.p : '') +\
+bem_compose(block_name, element='', modifer='', p=Bem.p.base, m=modifer)
+    return (p ? p + Bem.s.p : '') +\
         block_name +\
-        (element ? $bem.s.e + element : '') +\
-        (m ? $bem.s.m + m : '')
+        (element ? Bem.s.e + element : '') +\
+        (m ? Bem.s.m + m : '')
 
 
 /**
@@ -122,10 +123,10 @@ bem_b(block_name, prefix=bem-settings().p.base)
  */
 bem_p()
     if block is defined
-        /${bem_get_element_selector()}{$bem.s.m}
+        /${bem_get_element_selector()}{Bem.s.m}
             {block}
     else
-        return bem_get_element_selector() + $bem.s.m
+        return bem_get_element_selector() + Bem.s.m
 
 
 /**
@@ -133,10 +134,10 @@ bem_p()
  */
 bem_e()
     if block is defined
-        &{$bem.s.e}
+        &{Bem.s.e}
             {block}
     else
-        return bem_get_block_selector() + $bem.s.e
+        return bem_get_block_selector() + Bem.s.e
 
 
 /**
@@ -144,10 +145,10 @@ bem_e()
  */
 bem_m()
     if block is defined
-        &{$bem.s.m}
+        &{Bem.s.m}
             {block}
     else
-        return bem_get_element_selector() + $bem.s.m
+        return bem_get_element_selector() + Bem.s.m
 
 
 /**
@@ -155,16 +156,16 @@ bem_m()
  */
 bem_s()
     if block is defined
-        &.{$bem.p.state}{$bem.s.p}
+        &.{Bem.p.state}{Bem.s.p}
             {block}
     else
-        return selector('&') + '.' + $bem.p.state + $bem.s.p
+        return selector('&') + '.' + Bem.p.state + Bem.s.p
 
 
 /**
  * Bem shortcuts for the namespace mixins.
  */
-if $bem_use_shortcuts
+if Bem.use-shortcuts
     b = bem_b
     e = bem_e
     m = bem_m
